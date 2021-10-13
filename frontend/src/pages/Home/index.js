@@ -1,24 +1,24 @@
 import styles from './style.module.css'
-import { useState, useEffect} from 'react'
+import { useEffect} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteAnimal, loadAnimals } from '../../redux/actions'
+import {useHistory} from 'react-router-dom'
 
 export default function App() {
 
   let dispatch = useDispatch()
+  let history = useHistory()
 
   const {animals} = useSelector(state => state.data)
   useEffect(() =>{
     dispatch(loadAnimals())
-    console.log(dispatch(loadAnimals()))
-  },[])
+  },[dispatch])
 
   const handleDeleteAnimal = (id) =>{
     if(window.confirm("Você deseja mesmo deletar esse usuário ?")){
       dispatch(deleteAnimal(id))
     }
   }
-  console.log(dispatch)
 
   const convertDate = (date) =>{
     const newDate = date.split("-")
@@ -27,7 +27,7 @@ export default function App() {
 
   return (
     <div className={styles.container}>
-      <button className={styles.btnNew} >Novo animal</button>
+      <button className={styles.btnNew} onClick={() => {history.push("/animal/novo")}}>Novo animal</button>
 
       <table className={styles.table} cellSpacing="0">
         <thead>
@@ -46,8 +46,8 @@ export default function App() {
                 <td>{animal.name}</td>
                 <td>{animal.type}</td>
                 <td>{animal.weight} Kg</td>
-                <td><button>Alterar</button></td>
-                <td><button onClick={()=>{handleDeleteAnimal(animal.id)}}>Excluir</button></td>
+                <td><button onClick={() =>{history.push(`/animal/${animal.id}/editar`)}}>Alterar</button></td>
+                <td><button onClick={() =>{handleDeleteAnimal(animal.id)}}>Excluir</button></td>
               </tr>)
             })
           }

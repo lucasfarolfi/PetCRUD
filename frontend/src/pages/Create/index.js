@@ -1,60 +1,69 @@
 import { useState } from "react"
+import styles from './style.module.css'
+import { useHistory } from "react-router-dom"
+import { useDispatch } from "react-redux"
+import { addAnimal } from "../../redux/actions"
+export default function NewAnimal (){
 
-export default function Create(){
-    const [nameCreate, setNameCreate] = useState('')
-  const [typeCreate, setTypeCreate] = useState('')
-  const [weightCreate, setWeightCreate] = useState('')
-  const [birthdateCreate, setBirthdateCreate] = useState('')
-  const [createAnimal, setCreateAnimal] = useState({})
-  const handleChangeNameCreate = (e) =>{
-    console.log(nameCreate)
-    setNameCreate(e.target.value)
-  }
-  const handleChangeTypeCreate = (e) =>{
-    setTypeCreate(e.target.value)
-  }
-  const handleChangeWeightCreate = (e) =>{
-    setWeightCreate(e.target.value)
-  }
-  const handleChangeBirthCreate = (e) =>{
-    setBirthdateCreate(e.target.value)
-  }
+  let history = useHistory()
+  let dispatch = useDispatch()
 
-  //Submit com o redux
-  const handleSubmitCreate = (e) =>{
-    e.preventDefault()
-    setCreateAnimal({name: nameCreate, 
-      type: typeCreate, 
-      weight: weightCreate, 
-      birthdate: birthdateCreate
+    const [newAnimal, setNewAnimal] = useState({
+      name: '',
+      type: '',
+      weight: '',
+      date: ''
     })
-    console.log(createAnimal)
-  }
 
-  return(
-      <>
-      <div className={styles.container}>
+    const {name, type, weight, date} = newAnimal
 
-        <form className={styles.form} onSubmit={handleSubmitCreate}>
-          <fieldset className={styles.fieldset}>
-          <legend>Animal</legend>
-          
-            <label><span>Nome</span> <input type="text" placeholder="Nome do animal" value={nameCreate} onChange={handleChangeNameCreate}/></label>
-            <label><span>Tipo</span> <select value={typeCreate} onChange={handleChangeTypeCreate}>
-                <option>Cachorro</option>
-                <option>Gato</option>
-              </select>
-            </label>
-            <label><span>Peso</span> <input type="number" placeholder="Ex: 20.5" value={weightCreate} onChange={handleChangeWeightCreate}/></label>
-            <label><span>Data de nascimento</span> <input type="date" value={birthdateCreate} onChange={handleChangeBirthCreate}/></label>
-          </fieldset>
+    const handleInputChange = (e) =>{
+      let {name, value} = e.target
+      setNewAnimal({ ...newAnimal, [name]: value})
+    }
 
-          <div className={styles.btnSection}>
-            <button className={styles.btnCancel}>Cancelar</button>
-            <button type="submit" className={styles.btnSave}>Criar</button>
-          </div>
-        </form>
-      </div>
+    const [errorForm, setErrorForm] = useState(null)
+
+    //Submit com o redux
+    const handleSubmitCreate = (e) =>{
+      e.preventDefault()
+      
+      if(!name || !type || !weight || !date){
+        setErrorForm("O formulário deve ser preenchido corretamente")
+      }
+      else{
+        dispatch(addAnimal(newAnimal))
+        history.push("/")
+        setErrorForm(null)
+      }
+    }
+
+    return(
+        <>
+          <div className={styles.container}>
+
+          <form className={styles.form} onSubmit={handleSubmitCreate}>
+            <fieldset className={styles.fieldset}>
+            <legend>Animal</legend>
+            
+              <label><span>Nome</span> <input type="text" placeholder="Nome do animal" name="name" value={name} onChange={handleInputChange}/></label>
+              <label><span>Tipo</span> <select name="type" onChange={handleInputChange}>
+                  <option value="">Escolha uma opção</option>
+                  <option value="Cachorro">Cachorro</option>
+                  <option value="Gato">Gato</option>
+                </select>
+              </label>
+              <label><span>Peso</span> <input type="number" placeholder="Ex: 20.5" name="weight" value={weight} onChange={handleInputChange}/></label>
+              <label><span>Data de nascimento</span> <input type="date" name="date" value={date} onChange={handleInputChange}/></label>
+              {errorForm ? <div className={styles.errorMsg}>{errorForm}</div> : null}
+            </fieldset>
+
+            <div className={styles.btnSection}>
+              <button className={styles.btnCancel} onClick={()=>{history.push("/")}}>Cancelar</button>
+              <button type="submit" className={styles.btnSave}>Salvar</button>
+            </div>
+          </form>
+        </div>
       </>
   )
 }

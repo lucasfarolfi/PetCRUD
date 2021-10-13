@@ -1,0 +1,58 @@
+.container{
+    padding: 30px 0;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+.btnSave, .btnCancel{
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    color: white;
+    transition: all .2s;
+}
+.btnSave{
+    background-color: #4bacda;
+}
+.btnCancel{
+    background-color: #da4e4e;
+}
+.form{
+    margin: 15px 0;
+}
+.fieldset{
+    border-radius: 5px;
+    border: 3px solid rgb(129, 129, 129);
+    padding: 20px;
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+}
+.fieldset legend{
+    font-size: 1.1rem;
+    padding: 0 10px;
+}
+.form label span{
+    display: inline-block;
+    min-width: 160px;
+    text-align: right;
+}
+.form input, select{
+    border: 2px solid rgb(129, 129, 129);
+    height: 35px;
+    width: 140px;
+    margin-bottom: 15px;
+    text-indent: 5px;
+    font-family: inherit;
+}
+.form input[type="text"],.form select{
+    width: 200px;
+}
+.btnSection{
+    text-align: center;
+}
+.btnSection button{
+    margin: 0 5px;
+}
+.errorMsg{
+    color: rgb(216, 76, 76);
+}

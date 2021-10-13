@@ -15,11 +15,18 @@
       "weight": 5.5
     },
     {
-      "id": 3,
-      "name": "Rabim",
-      "date": "2021-05-20",
+      "name": "Ninão",
       "type": "Cachorro",
-      "weight": 10.5
+      "weight": "15",
+      "date": "2021-09-28",
+      "id": 4
+    },
+    {
+      "name": "Nick",
+      "type": "Cachorro",
+      "weight": "23",
+      "date": "2021-09-26",
+      "id": 5
     }
   ]
 }

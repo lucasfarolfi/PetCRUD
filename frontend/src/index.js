@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './pages/Home';
+import App from './pages/app.js';
 import "./styles/global.css";
 import {Provider} from 'react-redux'
 import {BrowserRouter} from 'react-router-dom'
