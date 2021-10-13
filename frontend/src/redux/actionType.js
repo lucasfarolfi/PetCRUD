@@ -1,0 +1,3 @@
+export const GET_ANIMALS = "GET_ANIMALS";
+export const ADD_ANIMALS = "ADD_ANIMALS";
+export const DELETE_ANIMALS = "DELETE_ANIMALS";

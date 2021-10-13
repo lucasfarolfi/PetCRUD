@@ -1,0 +1,25 @@
+{
+  "animais": [
+    {
+      "id": 1,
+      "name": "Chumbinho",
+      "date": "2021-05-20",
+      "type": "Cachorro",
+      "weight": 10.5
+    },
+    {
+      "id": 2,
+      "name": "Cleitin",
+      "date": "2021-05-20",
+      "type": "Gato",
+      "weight": 5.5
+    },
+    {
+      "id": 3,
+      "name": "Rabim",
+      "date": "2021-05-20",
+      "type": "Cachorro",
+      "weight": 10.5
+    }
+  ]
+}
