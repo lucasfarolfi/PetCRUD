@@ -25,7 +25,7 @@ const animalUpdated = () =>({
 
 export const loadAnimals = () =>{
     return function (dispatch){
-        axios.get("http://localhost:8080/animais").then(res =>{
+        axios.get("https://localhost:5001/api/animais").then(res =>{
             dispatch(getAnimals(res.data))
         }).catch(e => console.log(e))
     }
@@ -33,7 +33,7 @@ export const loadAnimals = () =>{
 
 export const deleteAnimal = (id) =>{
     return function (dispatch){
-        axios.delete("http://localhost:8080/animais/"+id).then(res =>{
+        axios.delete("https://localhost:5001/api/animais/"+id).then(res =>{
             dispatch(animalDeleted())
             dispatch(loadAnimals())
         }).catch(e => console.log(e))
@@ -42,7 +42,7 @@ export const deleteAnimal = (id) =>{
 
 export const addAnimal = (a) =>{
     return function (dispatch){
-        axios.post("http://localhost:8080/animais", a).then(res =>{
+        axios.post("https://localhost:5001/api/animais", a).then(res =>{
             dispatch(animalAdded())
             dispatch(loadAnimals())
         }).catch(e => console.log(e))
@@ -51,7 +51,7 @@ export const addAnimal = (a) =>{
 
 export const getOneAnimal = (id) =>{
     return function (dispatch){
-        axios.get("http://localhost:8080/animais/"+id).then(res =>{
+        axios.get("https://localhost:5001/api/animais/"+id).then(res =>{
             dispatch(getAnimal(res.data))
         }).catch(e => console.log(e))
     }
@@ -59,7 +59,7 @@ export const getOneAnimal = (id) =>{
 
 export const updateAnimal = (id, a) =>{
     return function (dispatch){
-        axios.put("http://localhost:8080/animais/"+id, a).then(res =>{
+        axios.put("https://localhost:5001/api/animais/"+id, a).then(res =>{
             dispatch(animalUpdated())
             dispatch(loadAnimals())
         }).catch(e => console.log(e))

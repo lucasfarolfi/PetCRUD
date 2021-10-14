@@ -13,7 +13,7 @@ namespace backend.Repositories
         Task<IEnumerable<Animal>> GetAnimalByType(string type); //Retorna pelo tipo
 
         Task CreateAnimal(Animal animal); //Cria um animal
-        Task<bool> UpdateAnimal(Animal animal); //Atualiza um animal
+        Task<bool> UpdateAnimal(string id, Animal animal); //Atualiza um animal
         Task<bool> DeleteAnimal(string id); //Deleta um animal
     }
 }

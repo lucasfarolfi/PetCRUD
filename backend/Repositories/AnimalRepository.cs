@@ -48,9 +48,9 @@ namespace backend.Repositories
         }
 
         //Metodo Update
-        public async Task<bool> UpdateAnimal(Animal animal)
+        public async Task<bool> UpdateAnimal(string id, Animal animal)
         {
-            var updateResult = await _context.Animals.ReplaceOneAsync(a => a.Id == animal.Id, animal);
+            var updateResult = await _context.Animals.ReplaceOneAsync(a => a.Id == id, animal);
             return updateResult.IsAcknowledged && updateResult.ModifiedCount > 0;
         }
     }

@@ -1,19 +1,14 @@
 using System;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
-using MongoDB.Driver;
 using System.Threading.Tasks;
-using backend.Config;
 using backend.Models;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using backend.Repositories;
-using Microsoft.AspNetCore.Http;
-using System.Collections.Generic;
+using Microsoft.AspNetCore.Cors;
 
 namespace backend.Controllers
 {
     [Controller]
-    [Route("api/v1/[controller]")]
+    [Route("api/animais")]
     public class AnimalController : ControllerBase
     {
         private readonly IAnimalRepository _repository;  
@@ -43,15 +38,20 @@ namespace backend.Controllers
             }
  
             await _repository.CreateAnimal(a);
-            return CreatedAtRoute("GetAnimal", new {id = a.Id}, a); //Retorna o produto
+            return Ok("Usuário criado com sucesso!"); //Retorna o produto
         }
 
-        [HttpPut]
-        public async Task<ActionResult> Update([FromBody] Animal a){
+        [HttpPut("{id:length(24)}")]
+        public async Task<ActionResult> Update(string id,[FromBody] Animal a){
             if(a is null){
                 return BadRequest("Dados inváldos");
             }
-            return Ok(await _repository.UpdateAnimal(a));
+            bool result = await _repository.UpdateAnimal(id, a);
+
+            if(!result){
+                return Ok("Nenhum dado foi alterado!");
+            }
+            return Ok("Usuário atualizado com sucesso!");
         }
         
         [HttpDelete("{id:length(24)}")]
@@ -59,7 +59,12 @@ namespace backend.Controllers
             if(id is null){
                 return BadRequest("Dados inválidos");
             }
-            return Ok(await _repository.DeleteAnimal(id));
+            bool result = await _repository.DeleteAnimal(id);
+            
+            if(!result){
+                return NotFound("Usuário não encontrado");
+            }
+            return Ok("Usuário deletado com sucesso!");
         }
     }
 }
