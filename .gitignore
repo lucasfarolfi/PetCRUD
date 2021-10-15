@@ -4,6 +4,8 @@ logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+/bin
+/obj
 
 # Runtime data
 pids
