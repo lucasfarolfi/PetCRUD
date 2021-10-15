@@ -54,6 +54,10 @@ export default function UpdateAnimal (){
               <option value="">Escolha uma opção</option>
               <option value="Cachorro">Cachorro</option>
               <option value="Gato">Gato</option>
+              <option value="Hamster">Hamster</option>
+              <option value="Passarinho">Passarinho</option>
+              <option value="Papagaio">Papagaio</option>
+              <option value="Peixe">Peixe</option>
             </select>
             </label>
             <label><span>Peso</span> <input type="number" placeholder="Ex: 20.5" name="weight" value={weight || ""} onChange={handleInputChange}/></label>
