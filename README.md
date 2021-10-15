@@ -1,13 +1,14 @@
 # PetCRUD
 
 ## Sobre o projeto
----
+
 O PetCRUD é uma simples aplicação de CRUD Web onde é possível cadastrar uma lista de animais, tendo suas respectivas informações, como: Data de nascimento, nome, tipo e peso. Temos a possibilidade de criar um novo animal, editar um animal já existente, e também deletar.
 
 Este projeto foi desenvolvido com base em um teste de processo seletivo de um Estágio.
 
-## Tecnologias utilizadas
 ---
+## Tecnologias utilizadas
+
 Nessa aplicação foram utilizados como tecnologias: 
 
 - React
@@ -17,8 +18,9 @@ Nessa aplicação foram utilizados como tecnologias:
 - Asp.Net MVC
 - MongoDB
 
-## Como instalar e utilizar o projeto
 ---
+## Como instalar e utilizar o projeto
+
 OBS: É necessário ter instalado o .Net 5.0 para o Backend, o MongoDB para o Banco de dados e o yarn/npm para o Frontend.
 
 Para configurar a API Backend:
