@@ -38,7 +38,7 @@ namespace backend.Controllers
             }
  
             await _repository.CreateAnimal(a);
-            return Ok("Usuário criado com sucesso!"); //Retorna o produto
+            return Ok(a); //Retorna o produto
         }
 
         [HttpPut("{id:length(24)}")]
@@ -51,7 +51,7 @@ namespace backend.Controllers
             if(!result){
                 return Ok("Nenhum dado foi alterado!");
             }
-            return Ok("Usuário atualizado com sucesso!");
+            return Ok(a);
         }
         
         [HttpDelete("{id:length(24)}")]
@@ -62,9 +62,9 @@ namespace backend.Controllers
             bool result = await _repository.DeleteAnimal(id);
             
             if(!result){
-                return NotFound("Usuário não encontrado");
+                return NotFound("Animal não encontrado");
             }
-            return Ok("Usuário deletado com sucesso!");
+            return Ok("Animal deletado com sucesso!");
         }
     }
 }
