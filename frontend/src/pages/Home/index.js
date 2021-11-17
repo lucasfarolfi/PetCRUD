@@ -4,6 +4,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { deleteAnimal, loadAnimals } from '../../redux/actions'
 import {useHistory} from 'react-router-dom'
 
+export const convertDate = (date) =>{
+  const newDate = date.split("-")
+  return `${newDate[2]}/${newDate[1]}/${newDate[0]}`
+}
+
 export default function App() {
 
   let dispatch = useDispatch()
@@ -20,14 +25,9 @@ export default function App() {
     }
   }
 
-  const convertDate = (date) =>{
-    const newDate = date.split("-")
-    return `${newDate[2]}/${newDate[1]}/${newDate[0]}`
-  }
-
   return (
     <div className={styles.container}>
-      <button className={styles.btnNew} onClick={() => {history.push("/animal/novo")}}>Novo animal</button>
+      <button className={styles.btnNew} onClick={() => {history.push("/animal/novo")}} data-testid="new-animal-btn">Novo animal</button>
 
       <table className={styles.table} cellSpacing="0">
         <thead>
