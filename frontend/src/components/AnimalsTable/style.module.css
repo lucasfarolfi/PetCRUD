@@ -1,0 +1,29 @@
+.table{
+    overflow-x: scroll;
+    margin-top: 20px;
+    width: 100%;
+}
+.table th, .table td{
+    border-top: 0; border-bottom: 0;
+}
+.table th, .table td{
+    text-align: left;
+    padding: 8px 5px;
+}
+.table thead{
+    color: white;
+    background-color: #a3a3a3;
+    font-weight: normal;
+}
+.table tbody tr:nth-child(even) {
+    background-color: rgb(230, 230, 230);
+}
+.table tbody tr:nth-child(odd) {
+    background-color: rgb(248, 248, 248);
+}
+.table button{
+    background-color: inherit;
+    font-size: inherit;
+    text-decoration: underline;
+    color: rgb(0, 107, 168);
+}

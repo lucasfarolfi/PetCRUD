@@ -6,6 +6,7 @@ import { MemoryRouter } from 'react-router';
 import {Router} from 'react-router-dom';
 import store from '../../redux/store'
 import {Provider} from 'react-redux'
+import AnimalsTable from '../../components/AnimalsTable/index'
 
 describe('Página principal', () =>{
     describe('Quando abro a página principal', () =>{
@@ -16,21 +17,10 @@ describe('Página principal', () =>{
             expect(newAnimalBtn.textContent).toBe('Novo animal')
         })
 
-        it('a data das linhas da tabela são convertidas', () =>{
-            const convertedDate = convertDate('2020-05-20');
-            expect(convertedDate).toBe('20/05/2020');
-        })
-
         it('a tabela é renderizada', () =>{
-
-        })
-
-        it('a tabela não é renderizada', () =>{
-            
-        })
-
-        it('as linhas da tabela são renderizadas', () =>{
-            
+            render(<Provider store={store}><App/></Provider>)
+            expect(screen.getByTestId('animals-table'))
+               .not.toBeNull()
         })
     })
 
