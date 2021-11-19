@@ -2,7 +2,9 @@ import { useState } from "react"
 import styles from './style.module.css'
 import { useHistory } from "react-router-dom"
 import { useDispatch } from "react-redux"
-import { addAnimal } from "../../redux/actions"
+//import { addAnimal } from "../../redux/actions"
+import { saveAnimal } from '../../redux-toolkit/animals/animalsSlice'
+
 export default function NewAnimal (){
 
   let history = useHistory()
@@ -32,7 +34,7 @@ export default function NewAnimal (){
         setErrorForm("O formulário deve ser preenchido corretamente")
       }
       else{
-        dispatch(addAnimal(newAnimal))
+        dispatch(saveAnimal(newAnimal))
         history.push("/")
         setErrorForm(null)
       }

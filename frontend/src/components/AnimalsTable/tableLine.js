@@ -1,6 +1,7 @@
 import { useDispatch } from 'react-redux'
-import { deleteAnimal } from '../../redux/actions'
+//import { deleteAnimal } from '../../redux/actions'
 import {useHistory} from 'react-router-dom'
+import { deleteAnimal } from '../../redux-toolkit/animals/animalsSlice'
 
 export const convertDate = (date) =>{
     const newDate = date.split("-")
