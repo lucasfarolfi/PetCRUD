@@ -10,7 +10,7 @@ export default function UpdateAnimal (){
   let history = useHistory()
   let dispatch = useDispatch()
   //let {animal} = useSelector(state => state.data)
-  const animal = useSelector(getAnimal(animalIdParam))
+  const animal = useSelector(getAnimal)
   const status = useSelector(state=>state.animals.status)
 
   const [newAnimal, setNewAnimal] = useState({})
