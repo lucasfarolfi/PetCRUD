@@ -23,10 +23,5 @@ describe('Componente da tabela de animais', () =>{
             )
             expect(container.firstChild).toMatchSnapshot()
         })
-
-        it('a data das linhas da tabela são convertidas', () =>{
-            const convertedDate = convertDate('2020-05-20');
-            expect(convertedDate).toBe('20/05/2020');
-        })
     })
 })

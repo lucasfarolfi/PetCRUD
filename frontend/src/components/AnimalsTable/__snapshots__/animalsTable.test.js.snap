@@ -26,6 +26,10 @@ exports[`Componente da tabela de animais Quando a tabela é renderizada a linha 
       Excluir
     </th>
   </thead>
-  <tbody />
+  <tbody>
+    <tr>
+      Nenhum projeto encontrado
+    </tr>
+  </tbody>
 </table>
 `;

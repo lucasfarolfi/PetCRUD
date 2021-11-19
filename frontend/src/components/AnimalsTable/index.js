@@ -19,6 +19,10 @@ export default function AnimalsTable({animals}){
               return <TableLine id={animal.id} date={animal.date} name={animal.name} type={animal.type} weight={animal.weight}/>
             })
           }
+
+          {
+            !animals && <tr>Nenhum projeto encontrado</tr>
+          }
         </tbody>
       </table>
     )

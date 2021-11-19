@@ -18,7 +18,7 @@ export default function TableLine({id, date, name, type, weight}){
         }
     }
 
-    return(<tr key={id}>
+    return(<tr key={id} data-testid="table-line">
         <td>{convertDate(date)}</td>
         <td>{name}</td>
         <td>{type}</td>
