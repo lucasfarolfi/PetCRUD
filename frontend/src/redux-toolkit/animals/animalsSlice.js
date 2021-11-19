@@ -1,49 +1,38 @@
-import {
-    createEntityAdapter,
-    createSlice,
-    createAsyncThunk,
-} from "@reduxjs/toolkit";
+import {createEntityAdapter,createSlice,createAsyncThunk} from "@reduxjs/toolkit";
 import { httpDelete, httpGet, httpPost, httpPut, httpGetOne } from "../../utils/animals";
 
-const animalAdapter = createEntityAdapter({
-    selectId: (animal) => animal.id,
-});
+//Entity adapter
+const animalAdapter = createEntityAdapter();
 
-export const fetchAnimals = createAsyncThunk(
-    "database/fetchAnimals",
-    async () => {
-      const result = await httpGet();
-      return result;
-    }
+//Endpoints requests
+export const fetchAnimals = createAsyncThunk("database/fetchAnimals",
+  async () => {
+    return await httpGet();
+  }
 );
-
-export const getAnimal = createAsyncThunk("database/getAnimal", async (id) => {
+export const getAnimal = createAsyncThunk("database/getAnimal", 
+  async (id) => {
     return await httpGetOne(id);
-});
-
-export const saveAnimal = createAsyncThunk(
-    "database/saveAnimal",
-    async (animal) => {
-      return await httpPost(animal);
-    }
+  }
 );
-  
-export const deleteAnimal = createAsyncThunk(
-    "database/deleteAnimal",
-    async (id) => {
-      await httpDelete(id);
-      return id;
-    }
+export const saveAnimal = createAsyncThunk("database/saveAnimal",
+  async (animal) => {
+    return await httpPost(animal);
+  }
 );
-  
-export const updateAnimal = createAsyncThunk(
-    "database/updateAnimal",
-    async (animal) => {
-      console.log(animal);
-      return await httpPut(animal.id, animal);
-    }
+export const deleteAnimal = createAsyncThunk("database/deleteAnimal",
+  async (id) => {
+    await httpDelete(id);
+    return id;
+  }
+);
+export const updateAnimal = createAsyncThunk("database/updateAnimal",
+  async (animal) => {
+    return await httpPut(animal.id, animal);
+  }
 );
 
+//Slice
 const animalSlice = createSlice({
     name: "animals",
     initialState: animalAdapter.getInitialState({

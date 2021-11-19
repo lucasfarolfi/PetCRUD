@@ -1,8 +1,10 @@
 import {configureStore} from '@reduxjs/toolkit'
+import animalsReducer from './animals/animalsSlice'
 
-// import animalsReducer
-export const store = configureStore({
+const store = configureStore({
     reducer: {
         animals: animalsReducer
     }
 })
+
+export default store
