@@ -7,29 +7,31 @@ exports[`Componente da tabela de animais Quando a tabela é renderizada a linha 
   data-testid="animals-table"
 >
   <thead>
-    <th>
-      Data de nascimento
-    </th>
-    <th>
-      Nome
-    </th>
-    <th>
-      Tipo
-    </th>
-    <th>
-      Peso
-    </th>
-    <th>
-      Alterar
-    </th>
-    <th>
-      Excluir
-    </th>
+    <tr>
+      <th>
+        Data de nascimento
+      </th>
+      <th>
+        Nome
+      </th>
+      <th>
+        Tipo
+      </th>
+      <th>
+        Peso
+      </th>
+      <th>
+        Alterar
+      </th>
+      <th>
+        Excluir
+      </th>
+    </tr>
   </thead>
   <tbody>
-    <tr>
+    <p>
       Nenhum projeto encontrado
-    </tr>
+    </p>
   </tbody>
 </table>
 `;
