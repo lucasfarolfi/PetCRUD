@@ -3,26 +3,22 @@ import styles from './style.module.css'
 import { useHistory, useParams } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux";
 //import { updateAnimal, getOneAnimal } from '../../redux/actions'
-import { updateAnimal, getAnimal } from '../../redux-toolkit/animals/animalsSlice'
+import { updateAnimal, selectAnimalsById } from '../../redux-toolkit/animals/animalsSlice'
 
 export default function UpdateAnimal (){
   const {id: animalIdParam} = useParams();
   let history = useHistory()
   let dispatch = useDispatch()
   //let {animal} = useSelector(state => state.data)
-  const animal = useSelector(getAnimal)
+  const animal = useSelector(state=> selectAnimalsById(state, animalIdParam))
   const status = useSelector(state=>state.animals.status)
 
   const [newAnimal, setNewAnimal] = useState({})
 
   useEffect(() =>{
-    if(status === "not_loaded"){
-      dispatch(getAnimal(animalIdParam))
-      console.log(animalIdParam)
-    }
-    
-    console.log(animalIdParam)
-  },[dispatch, animalIdParam])
+    if(status === 'not_loaded') console.log(status)
+    if(status === 'ready') console.log(animal);
+  },[animalIdParam, status, animal])
   
   useEffect(() =>{
     setNewAnimal({...animal})
@@ -44,6 +40,7 @@ export default function UpdateAnimal (){
       setErrorForm("O formulário deve ser preenchido corretamente")
     }
     else{
+      console.log(animalIdParam, newAnimal)
       dispatch(updateAnimal(animalIdParam, newAnimal))
       history.push("/")
     }
