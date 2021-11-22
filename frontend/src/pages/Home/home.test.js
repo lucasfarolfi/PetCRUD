@@ -16,6 +16,7 @@ describe('Página principal', () =>{
                .not.toBeNull()
         })
     })
+    
     describe('Quando clico no botão de Novo animal', () =>{
         it('é redirecionado para a página de criar animal', () =>{
             const history = createMemoryHistory()

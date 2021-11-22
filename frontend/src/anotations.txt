@@ -26,4 +26,4 @@ it('a tabela é renderizada', () =>{
 
         await store.dispatch(fetchAnimals())
         expect(store.getState().animals.status).toBe('loading')
-    })
+        })

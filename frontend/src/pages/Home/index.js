@@ -17,11 +17,10 @@ export default function App() {
   const history = useHistory()
   const animals = useSelector(selectAllAnimals)
   const status = useSelector(state=>state.animals.status)
+
   useEffect(() =>{
-    if(status === "not_loaded"){
-      dispatch(fetchAnimals())
-    }
-  },[dispatch, status])
+    dispatch(fetchAnimals())
+  },[dispatch])
   //Redux Thunk
 /*
   let dispatch = useDispatch()

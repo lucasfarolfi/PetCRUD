@@ -29,9 +29,11 @@ exports[`Componente da tabela de animais Quando a tabela é renderizada a linha 
     </tr>
   </thead>
   <tbody>
-    <p>
-      Nenhum projeto encontrado
-    </p>
+    <tr>
+      <td>
+        Nenhum projeto encontrado
+      </td>
+    </tr>
   </tbody>
 </table>
 `;
