@@ -93,7 +93,7 @@ describe("Redux Slice", () =>{
 
         await store.dispatch(getAnimal('1'))
         expect(store.getState().animals.status).toBe('ready')
-        expect(store.getState().animals.entities["1"]).toBe(animalGet) //Consertar
+        expect(store.getState().animals.entities["1"]).toBe(animalGet)
     })
 
     it('Quando retorna erro na operação httpGetOne', async () => {
