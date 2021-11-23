@@ -1,8 +1,8 @@
-import {httpDelete, httpGet, httpPut, httpPost, httpGetOne} from '../../utils/animals'
+import {httpDelete, httpGet, httpPut, httpPost, httpGetOne} from '../utils/animals'
 import { configureStore } from '@reduxjs/toolkit'
-import animalsReducer, { deleteAnimal, fetchAnimals, getAnimal, saveAnimal, updateAnimal } from './animalsSlice'
+import animalsReducer, { deleteAnimal, fetchAnimals, getAnimal, saveAnimal, updateAnimal } from '../redux-toolkit/animals/animalsSlice'
 
-jest.mock("../../utils/animals", () => ({
+jest.mock("../utils/animals", () => ({
     httpGet: jest.fn(),
     httpGetOne: jest.fn(),
     httpPost: jest.fn(),
