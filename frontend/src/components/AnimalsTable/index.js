@@ -30,8 +30,7 @@ export default function AnimalsTable({animals}){
       <tbody>
         {
           animals.map((animal, idx) =>{
-            return <TableLine key={animal.id} id={animal.id} date={animal.date} 
-            name={animal.name} type={animal.type} weight={animal.weight} handleDelete={handleDeleteAnimal}/>
+            return <TableLine animal={animal} handleDelete={handleDeleteAnimal}/>
           })
         }
       </tbody>

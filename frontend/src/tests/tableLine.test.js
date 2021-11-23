@@ -27,7 +27,7 @@ describe('Componente da linha da tabela', () =>{
             date: "2020-01-10"
         }
         render(<Provider store={store}><table><tbody>
-            <TableLine id={animal.id} name={animal.name} type={animal.type} weight={animal.weight} date={animal.date}/>
+            <TableLine animal={animal}/>
         </tbody></table></Provider>)
         const name = screen.queryByText(animal.name)
         const type = screen.queryByText(animal.type)
@@ -55,7 +55,7 @@ describe('Componente da linha da tabela', () =>{
         }
         render(<Provider store={store}>
             <Router history={history}><table><tbody>
-            <TableLine id={animal.id} name={animal.name} type={animal.type} weight={animal.weight} date={animal.date}/>
+            <TableLine animal={animal}/>
             </tbody></table></Router></Provider>
         , {wrapper: MemoryRouter})
         const alterBtn = screen.getByText("Alterar")
@@ -75,8 +75,7 @@ describe('Componente da linha da tabela', () =>{
             date: "2020-01-10"
         }
         render(<Provider store={store}><table><tbody>
-            <TableLine id={animal.id} name={animal.name} type={animal.type} 
-            weight={animal.weight} date={animal.date} handleDelete={deleteFn}/>
+            <TableLine animal={animal} handleDelete={deleteFn}/>
             </tbody></table></Provider>
         , {wrapper: MemoryRouter})
         const deleteBtn = screen.getByText("Excluir")

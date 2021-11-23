@@ -5,17 +5,17 @@ export const convertDate = (date) =>{
     return `${newDate[2]}/${newDate[1]}/${newDate[0]}`
 }
 
-export default function TableLine({id, date, name, type, weight, handleDelete}){
+export default function TableLine({animal, handleDelete}){
   let history = useHistory()
 
-    if(id && date && name && type && weight){
-      return(<tr key={id} data-testid="table-line">
-        <td>{convertDate(date)}</td>
-        <td>{name}</td>
-        <td>{type}</td>
-        <td>{weight} Kg</td>
-        <td><button onClick={() =>{history.push(`/animal/${id}/editar`)}}>Alterar</button></td>
-        <td><button onClick={() =>{handleDelete(id)}}>Excluir</button></td>
+    if(animal && animal.id){
+      return(<tr key={animal.id} data-testid="table-line">
+        <td>{convertDate(animal.date)}</td>
+        <td>{animal.name}</td>
+        <td>{animal.type}</td>
+        <td>{animal.weight} Kg</td>
+        <td><button onClick={() =>{history.push(`/animal/${animal.id}/editar`)}}>Alterar</button></td>
+        <td><button onClick={() =>{handleDelete(animal.id)}}>Excluir</button></td>
       </tr>)
     }
     else{
