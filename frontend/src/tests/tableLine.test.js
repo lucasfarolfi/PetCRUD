@@ -1,7 +1,5 @@
 import React from 'react';
 import { screen, render, fireEvent } from '@testing-library/react';
-import { userEvent } from '@testing-library/user-event'
-import AnimalTable from '../components/AnimalsTable/index';
 import TableLine, { convertDate } from '../components/AnimalsTable/tableLine'
 import {Router, MemoryRouter} from 'react-router-dom';
 import store from '../redux/store'
@@ -84,7 +82,7 @@ describe('Componente da linha da tabela', () =>{
         const deleteBtn = screen.getByText("Excluir")
         expect(deleteBtn.textContent).toBe("Excluir")
 
-        userEvent.click(deleteFn, {button: 0})
-        expect(deleteBtn).toHaveBeenCalled()
+        fireEvent.click(deleteBtn)
+        expect(deleteFn).toHaveBeenCalledTimes(1)
     })
 })
