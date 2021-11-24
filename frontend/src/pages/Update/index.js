@@ -11,7 +11,7 @@ export default function UpdateAnimal (){
   let dispatch = useDispatch()
   //let {animal} = useSelector(state => state.data)
   const animal = useSelector(state=> selectAnimalsById(state, animalIdParam))
-  //const status = useSelector(state=>state.animals.status)
+  const status = useSelector(state=>state.animals.status)
 
   const [newAnimal, setNewAnimal] = useState({})
 
@@ -38,6 +38,9 @@ export default function UpdateAnimal (){
     if(!name || !type || !weight || !date){
       setErrorForm("O formulário deve ser preenchido corretamente")
     }
+    else if(status === 'failed'){
+      setErrorForm("Erro ao carregar o animal na base de dados")
+    }
     else{
       dispatch(updateAnimal(newAnimal))
       history.push("/")
@@ -50,7 +53,7 @@ export default function UpdateAnimal (){
 
         <form className={styles.form} onSubmit={handleSubmitCreate}>
           <fieldset className={styles.fieldset}>
-            <legend>Animal</legend>
+            <legend>Atualizar Animal</legend>
             
             <label><span>Nome</span> <input type="text" placeholder="Nome do animal" name="name" value={name || ""} onChange={handleInputChange}/></label>
             <label><span>Tipo</span> <select name="type" value={type || ""} onChange={handleInputChange}>
