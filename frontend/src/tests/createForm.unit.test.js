@@ -1,12 +1,9 @@
 import React from 'react';
 import { screen, render, fireEvent } from '@testing-library/react';
-import TableLine, { convertDate } from '../components/AnimalsTable/tableLine'
-import {Router, MemoryRouter} from 'react-router-dom';
-import store from '../redux/store'
-import {Provider} from 'react-redux'
+import {Router} from 'react-router-dom';
+import {useDispatch, useSelector} from 'react-redux'
 import {createMemoryHistory} from 'history';
-import AnimalsTable from '../components/AnimalsTable/index';
-import { deleteAnimal, fetchAnimals, getAnimal, saveAnimal, updateAnimal } from '../redux-toolkit/animals/animalsSlice'
+import { saveAnimal } from '../redux-toolkit/animals/animalsSlice'
 import Create from '../pages/Create/index'
 
 jest.mock("react-redux", () => ({
@@ -19,7 +16,7 @@ const mockState = {
     animals: {
         status: 'not_loaded',
         error: null,
-        animals: [{
+        entities: [{
             id: "1",
             name: "Bob",
             type: "Cachorro",
@@ -37,12 +34,25 @@ const mockState = {
 }
 
 jest.mock("../redux-toolkit/animals/animalsSlice", () => ({
-    getAnimal: jest.fn((state, id) => mockAppState.animals.animals.find(a => a.id == id)),
-    saveAnimal: jest.fn(),
-    updateAnimal: jest.fn()
+    saveAnimal: jest.fn()
 }))
 
 describe('Formulário de criar animal', () =>{
+    beforeEach(() => {
+        useSelector.mockImplementation(cb => cb(mockState))
+        useDispatch.mockImplementation(() => jest.fn(param => param))
+        saveAnimal.mockImplementation(() => {
+            mockState.animals.status = 'ready',
+            mockState.animals.entities.push({
+                id: "3",
+                name: "Bob",
+                type: "Cachorro",
+                weight: "10.5",
+                date: "2020-01-10"
+            })
+        })
+    })
+
     it('O formulário é renderizado ao entrar na página', ()=>{
         render(<Create />)
         expect(screen.getByText("Novo Animal").textContent).toBe("Novo Animal")
@@ -72,32 +82,40 @@ describe('Formulário de criar animal', () =>{
     })
 
     it('Quando o formulário é preenchido e enviado corretamente', ()=>{
-
         const history = createMemoryHistory()
         render(<Router history={history}><Create /></Router>)
-        const saveBtn = screen.getByText("Salvar")
-        fireEvent.click(saveBtn)
+
+        const animal = {
+            id: "3",
+            name: "Bob",
+            type: "Cachorro",
+            weight: "10.5",
+            date: "2020-01-10"
+        }
 
         //Get inputs
         const name = screen.getByLabelText("Nome")
         const type = screen.getByLabelText("Tipo")
         const weight = screen.getByLabelText("Peso")
         const date = screen.getByLabelText("Data de nascimento")
+        const saveBtn = screen.getByText("Salvar")
 
         //Input state changes
-        fireEvent.change(name, {target:{value: "Bob"}})
-        fireEvent.change(type, {target:{value: "Cachorro"}})
-        fireEvent.change(weight, {target:{value: 10.5}})
-        fireEvent.change(date, {target:{value: "2012-10-10"}})
+        fireEvent.change(name, {target:{value: animal.name}})
+        fireEvent.change(type, {target:{value: animal.type}})
+        fireEvent.change(weight, {target:{value: animal.weight}})
+        fireEvent.change(date, {target:{value: animal.date}})
 
         //Verify inputs
-        expect(name.value).toBe("Bob")
-        expect(type.value).toBe("Cachorro")
-        expect(weight.value).toBe("10.5")
-        expect(date.value).toBe("2012-10-10")
+        expect(name.value).toBe(animal.name)
+        expect(type.value).toBe(animal.type)
+        expect(weight.value).toBe(animal.weight)
+        expect(date.value).toBe(animal.date)
 
-        //Falta o botão de salvar
-    }) //Corrigir
+        fireEvent.click(saveBtn)
+        expect(saveAnimal).toHaveBeenCalledTimes(1)
+        expect(mockState.animals.entities.filter(a => a.id === "3")[0]).toEqual(animal)
+    })
 
     it('Quando o botão de Salvar é clicado sem preencher nenhum input', ()=>{
         const history = createMemoryHistory()
