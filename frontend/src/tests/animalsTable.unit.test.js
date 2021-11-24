@@ -1,20 +1,25 @@
 import React from 'react';
 import { screen, render, fireEvent } from '@testing-library/react';
-import TableLine, { convertDate } from '../components/AnimalsTable/tableLine'
+import {TableLine} from '../components/AnimalsTable/tableLine'
 import {Router, MemoryRouter} from 'react-router-dom';
 import store from '../redux/store'
 import {Provider} from 'react-redux'
 import {createMemoryHistory} from 'history';
 import AnimalsTable from '../components/AnimalsTable/index';
+import { selectAllAnimals } from '../redux-toolkit/animals/animalsSlice';
 
-//jest.mock('../components/AnimalsTable/tableLine', () => jest.fn(() => ) )
 
-jest.mock("../components/AnimalsTable/tableLine", () => jest.fn(() => <tr><td colSpan={3}>MockedLine</td></tr>))
+/*jest.mock('../components/AnimalsTable/tableLine', () => ({
+    ...jest.requireActual('../components/AnimalsTable/tableLine'),
+    TableLine: jest.fn(() => <tr><td>MockedLine</td></tr>)
+}))*/
 
 describe('Componente da tabela de animais', () =>{
-    afterEach(() => {
-        jest.clearAllMocks();
-    })
+   /* beforeEach(() => {
+        TableLine.mockImplementation(() =>{
+            return (<tr><td>MockedLine</td></tr>)
+        }
+    }))*/
 
     it('Quando é renderizada com props vazio', () =>{
         const {container} = render(<Provider store={store}><AnimalsTable /></Provider>)
@@ -26,22 +31,7 @@ describe('Componente da tabela de animais', () =>{
         expect(container.textContent).toBe("Não há animais a serem exibidos")
     })
 
-    it('Quando é renderizada com um animal', () =>{
-        /*
-        render(<Provider store={store}><AnimalsTable animals={[{
-            id: "1",
-            name: "Bob",
-            type: "Cachorro",
-            weight: "10.5",
-            date: "2020-01-10"
-        }]}/></Provider>)
-        console.log(render)*/
-        //expect(screen.getByText('Nome').textContent).toBe("Nome")
-        //expect(TableLine).toHaveBeenCalledTimes(1)
-    })
-
-    it('Quando é renderizada com vários animais', () =>{
-        /*
+    it('Quando é renderizada com a lista de animais', () =>{
         const animal = [{
             id: "1",
             name: "Bob",
@@ -50,35 +40,14 @@ describe('Componente da tabela de animais', () =>{
             date: "2020-01-10"
         },{
             id: "2",
-            name: "Bob",
-            type: "Cachorro",
-            weight: 10.5,
-            date: "2020-01-10"
-        },{
-            id: "3",
-            name: "Bob",
+            name: "Nick",
             type: "Cachorro",
             weight: 10.5,
             date: "2020-01-10"
         }]
-        render(<Provider store={store}><AnimalsTable animals={animal}/></Provider>)
-        expect(screen.getByTestId('animals-table')).toBeInTheDocument()
-        expect(TableLine).toHaveBeenCalledTimes(animal.length)*/
+        render(<Provider store={store}><AnimalsTable animals={animal}/></Provider>, {wrapper: MemoryRouter})
+        expect(screen.getByTestId('animals-table')).not.toBeNull()
+        expect(screen.getByText(animal[0].name).textContent).toBe(animal[0].name)
+        expect(screen.getByText(animal[1].name).textContent).toBe(animal[1].name)
     })
-
-    /*describe('Quando a tabela é renderizada', () =>{
-        it('a linha da tabela deverá receber e exibir os atributos corretamente', () =>{
-            const history = createMemoryHistory()
-
-            const { container } = render(
-                <Provider store={store}>
-                    <Router history={history}><App>
-                        <TableLine id="619572d1da346912a5ea67b7"
-                            name="Jorge" date="05/10/2025" type="Cachorro" weight={15.5} />
-                    </App></Router>
-                </Provider>
-            )
-            expect(container.firstChild).toMatchSnapshot()
-        })
-    })*/
 })
