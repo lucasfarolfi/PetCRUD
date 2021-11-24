@@ -7,7 +7,9 @@ import {Provider} from 'react-redux'
 import {createMemoryHistory} from 'history';
 import AnimalsTable from '../components/AnimalsTable/index';
 
-jest.mock('../components/AnimalsTable/tableLine', () => jest.fn(() => (<tr><td>MockedLine</td><td>MockedLine</td><td>MockedLine</td><td>MockedLine</td><td>MockedLine</td></tr>)))
+//jest.mock('../components/AnimalsTable/tableLine', () => jest.fn(() => ) )
+
+jest.mock("../components/AnimalsTable/tableLine", () => jest.fn(() => <tr><td colSpan={3}>MockedLine</td></tr>))
 
 describe('Componente da tabela de animais', () =>{
     afterEach(() => {
@@ -25,15 +27,16 @@ describe('Componente da tabela de animais', () =>{
     })
 
     it('Quando é renderizada com um animal', () =>{
+        /*
         render(<Provider store={store}><AnimalsTable animals={[{
             id: "1",
             name: "Bob",
             type: "Cachorro",
-            weight: 10.5,
+            weight: "10.5",
             date: "2020-01-10"
         }]}/></Provider>)
-        console.log(screen)
-        //expect(screen.getByTestId('animals-table')).toBeInTheDocument()
+        console.log(render)*/
+        //expect(screen.getByText('Nome').textContent).toBe("Nome")
         //expect(TableLine).toHaveBeenCalledTimes(1)
     })
 

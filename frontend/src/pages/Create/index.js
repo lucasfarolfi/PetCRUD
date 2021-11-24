@@ -46,7 +46,7 @@ export default function NewAnimal (){
 
           <form className={styles.form} onSubmit={handleSubmitCreate}>
             <fieldset className={styles.fieldset}>
-            <legend>Animal</legend>
+            <legend>Novo Animal</legend>
             
               <label><span>Nome</span> <input type="text" placeholder="Nome do animal" name="name" value={name} onChange={handleInputChange}/></label>
               <label><span>Tipo</span> <select name="type" onChange={handleInputChange}>
