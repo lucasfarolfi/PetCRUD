@@ -9,13 +9,6 @@ import {Provider} from 'react-redux'
 import AnimalsTable from '../components/AnimalsTable/index'
 
 describe('Página principal', () =>{
-    /*describe('Quando abro a página principal', () => {
-        it('a tabela é renderizada', () =>{
-            render(<Provider store={store}><App/></Provider>)
-            expect(screen.getByTestId('animals-table'))
-               .not.toBeNull()
-        })
-    })*/
     
     describe('Quando clico no botão de Novo animal', () =>{
         it('é redirecionado para a página de criar animal', () =>{
