@@ -1,14 +1,10 @@
 import React from 'react';
 import { render } from '@testing-library/react'
-import App from '../pages/Home'
 import {useSelector, useDispatch} from 'react-redux'
 import { MemoryRouter } from 'react-router-dom'
-import animalsReducer, {deleteAnimal, fetchAnimals, selectAllAnimals} from '../redux-toolkit/animals/animalsSlice'
+import { fetchAnimals} from '../redux-toolkit/animals/animalsSlice'
 import AnimalsTable from '../components/AnimalsTable/index'
-import userEvent from '@testing-library/user-event'
-import {Provider} from 'react-redux'
 import {createMemoryHistory} from 'history';
-import { configureStore } from '@reduxjs/toolkit'
 import {Router} from 'react-router-dom';
 
 jest.mock("react-redux",() => ({
@@ -16,8 +12,6 @@ jest.mock("react-redux",() => ({
     useSelector: jest.fn(),
     useDispatch: jest.fn(() => jest.fn(param => param))
 }))
-
-let store;
 
 const mockState = {
     animals: {
@@ -46,12 +40,10 @@ jest.mock('../redux-toolkit/animals/animalsSlice', () => ({
     fetchAnimals: jest.fn()
 }))
 
-jest.useFakeTimers() //setTimeout
-
 describe("Testes de integração Página home + Tabela", () =>{
     beforeEach(() =>{
-        //store = configureStore({reducer: { animals: animalsReducer }});
         useSelector.mockImplementation(cb => cb(mockState))
+        useDispatch.mockImplementation(() => jest.fn(param => param))
     })
 
     afterEach(() =>{
@@ -60,8 +52,16 @@ describe("Testes de integração Página home + Tabela", () =>{
         jest.clearAllTimers()
     })
 
-    it("Quando a lista de animais não é carregada pelo redux", () =>{/*
+    it("Quando a lista de animais é carregada pelo redux e exibida corretamente", () =>{
+        fetchAnimals.mockImplementation(() => {
+            mockState.animals.status = 'ready'
+        })
+        
         const history = createMemoryHistory()
-        render(<Provider store={store}><Router history={history}><App/></Router></Provider>, {wrapper: MemoryRouter})*/
+        const page = render(<Router history={history}><AnimalsTable animals={mockState.animals.entities}/></Router>, 
+            {wrapper: MemoryRouter})
+        expect(page.getByTestId('animals-table')).not.toBeNull()
+        expect(page.getByText(mockState.animals.entities["0"].name)).not.toBeNull()
+        expect(page.getByText(mockState.animals.entities["1"].name)).not.toBeNull()
     })
 })
