@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react'
 import App from '../pages/Home'
-import {useSelector} from 'react-redux'
+import {useSelector, useDispatch} from 'react-redux'
 import { MemoryRouter } from 'react-router-dom'
 import animalsReducer, {deleteAnimal, fetchAnimals, selectAllAnimals} from '../redux-toolkit/animals/animalsSlice'
 import AnimalsTable from '../components/AnimalsTable/index'
