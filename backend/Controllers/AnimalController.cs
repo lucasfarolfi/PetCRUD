@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using backend.Models;
 using backend.Repositories;
 using Microsoft.AspNetCore.Cors;
+using backend.Data;
+using System.Collections.Generic;
 
 namespace backend.Controllers
 {
@@ -11,20 +13,19 @@ namespace backend.Controllers
     [Route("api/animais")]
     public class AnimalController : ControllerBase
     {
-        private readonly IAnimalRepository _repository;  
-        public AnimalController(IAnimalRepository repository){
+        private readonly AnimalRepository _repository;  
+        public AnimalController(AnimalRepository repository){
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetAll(){
-            var animals = await _repository.GetAnimals();
-            return Ok(animals);
+        public ActionResult<List<Animal>> GetAll(){
+            return _repository.GetAnimals();
         }
 
         [HttpGet("{id:length(24)}")]
-        public async Task<ActionResult> GetOne(string id){
-            var animal = await _repository.GetAnimal(id);
+        public ActionResult<Animal> GetOne(string id){
+            var animal = _repository.GetAnimal(id);
             if(animal is null){
                 return NotFound("Animal não encontrado.");
             }
@@ -37,34 +38,28 @@ namespace backend.Controllers
                 return BadRequest("Dados inválidos");
             }
  
-            await _repository.CreateAnimal(a);
-            return Ok(a); //Retorna o produto
+            var animal = await _repository.CreateAnimal(a);
+            return Created("api/animais/"+animal.Id,animal); //Retorna o produto
         }
 
         [HttpPut("{id:length(24)}")]
-        public async Task<ActionResult> Update(string id,[FromBody] Animal a){
-            if(a is null){
-                return BadRequest("Dados inváldos");
+        public IActionResult Update(string id,[FromBody] Animal a){
+            var animalFound = _repository.GetAnimal(id);
+            if(a is null || id is null || animalFound is null){
+                return NotFound();
             }
-            bool result = await _repository.UpdateAnimal(id, a);
-
-            if(!result){
-                return Ok("Nenhum dado foi alterado!");
-            }
+            _repository.UpdateAnimal(id, a);
             return Ok(a);
         }
         
         [HttpDelete("{id:length(24)}")]
-        public async Task<ActionResult> Delete(string id){
-            if(id is null){
-                return BadRequest("Dados inválidos");
+        public IActionResult Delete(string id){
+            var a = _repository.GetAnimal(id);
+            if(a is null || id is null){
+                return NotFound();
             }
-            bool result = await _repository.DeleteAnimal(id);
-            
-            if(!result){
-                return NotFound("Animal não encontrado");
-            }
-            return Ok("Animal deletado com sucesso!");
+            _repository.DeleteAnimal(id);
+            return NoContent();
         }
     }
 }

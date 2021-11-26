@@ -29,7 +29,7 @@ namespace backend
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IAnimalContext, AnimalContext>();
-            services.AddScoped<IAnimalRepository, AnimalRepository>();
+            services.AddScoped< AnimalRepository>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

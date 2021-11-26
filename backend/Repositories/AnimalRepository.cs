@@ -8,7 +8,7 @@ using MongoDB.Driver;
 
 namespace backend.Repositories
 {
-    public class AnimalRepository : IAnimalRepository
+    public class AnimalRepository 
     {
         private readonly IAnimalContext _context;
         public AnimalRepository(IAnimalContext context){
@@ -16,42 +16,47 @@ namespace backend.Repositories
                 throw new ArgumentNullException(nameof(context));
         }
 
+        public AnimalRepository(){}
+
         //Metodos Get
-        public async Task<IEnumerable<Animal>> GetAnimals()
+        public virtual List<Animal> GetAnimals()
         {
-            return await _context.Animals.Find(a => true).ToListAsync();
+            return _context.Animals.Find(a => true).ToList();
         }
-        public async Task<Animal> GetAnimal(string id)
+        public Animal GetAnimal(string id)
         {
-            return await _context.Animals.Find(a => a.Id == id).FirstOrDefaultAsync();
+            return _context.Animals.Find(a => a.Id == id).FirstOrDefault();
         }
-        public async Task<IEnumerable<Animal>> GetAnimalByName(string name)
+        public virtual List<Animal> GetAnimalByName(string name)
         {
-            return await _context.Animals.Find(a => a.Name == name).ToListAsync();
+            return _context.Animals.Find(a => a.Name == name).ToList();
         }
-        public async Task<IEnumerable<Animal>> GetAnimalByType(string type)
+        public virtual List<Animal> GetAnimalByType(string type)
         {
-            return await _context.Animals.Find(a => a.Type == type).ToListAsync();
+            return _context.Animals.Find(a => a.Type == type).ToList();
         }
 
         //Metodo Create
-        public async Task CreateAnimal(Animal animal)
+        public async Task<Animal> CreateAnimal(Animal animal)
         {
             await _context.Animals.InsertOneAsync(animal);
+            return animal;
         }
 
         //Metodo Delete
-        public async Task<bool> DeleteAnimal(string id)
+        public void DeleteAnimal(string id)
         {
-            DeleteResult deleteResult = await _context.Animals.DeleteOneAsync(a => a.Id == id);
-            return deleteResult.IsAcknowledged && deleteResult.DeletedCount > 0;
+            _context.Animals.DeleteOneAsync(a => a.Id == id);
+            //DeleteResult deleteResult = await _context.Animals.DeleteOneAsync(a => a.Id == id);
+            //return deleteResult.IsAcknowledged && deleteResult.DeletedCount > 0;
         }
 
         //Metodo Update
-        public async Task<bool> UpdateAnimal(string id, Animal animal)
+        public void UpdateAnimal(string id, Animal animal)
         {
-            var updateResult = await _context.Animals.ReplaceOneAsync(a => a.Id == id, animal);
-            return updateResult.IsAcknowledged && updateResult.ModifiedCount > 0;
+            _context.Animals.ReplaceOne(a => a.Id == id, animal);
+            //var updateResult = await _context.Animals.ReplaceOneAsync(a => a.Id == id, animal);
+            //return updateResult.IsAcknowledged && updateResult.ModifiedCount > 0;
         }
     }
 }
