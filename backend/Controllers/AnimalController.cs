@@ -49,7 +49,7 @@ namespace backend.Controllers
                 return NotFound();
             }
             _repository.UpdateAnimal(id, a);
-            return Ok(a);
+            return NoContent();
         }
         
         [HttpDelete("{id:length(24)}")]

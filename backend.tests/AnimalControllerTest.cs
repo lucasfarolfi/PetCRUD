@@ -34,5 +34,26 @@ namespace backend.tests
             //Assert
             Assert.Equal(stubAnimalsList, GetAll.Value);
         }
+
+        [Fact]
+        public void GetOne_WithExistingAnimal_ReturnAnimal(){
+            //Arrange
+            string id = ObjectId.GenerateNewId().ToString(); //Gera um id do mongodb
+            var stubAnimal = new Animal {Id=id, Name="Bob", Type="Cachorro", Weight=10, Date="2020-10-01"};
+
+            var repositoryMock = new Mock<AnimalRepository>();
+            repositoryMock.Setup(repo => repo.GetAnimal(id)).Returns(stubAnimal);
+
+            var animalController = new AnimalController(repositoryMock.Object);
+
+            //Act
+            var GetOne = animalController.GetOne(id);
+            var a = GetOne.Result as OkObjectResult;
+
+            //Assert
+            Assert.IsType<OkObjectResult>(GetOne.Result);
+            Assert.Equal(stubAnimal, a.Value);
+        }
+
     }
 }

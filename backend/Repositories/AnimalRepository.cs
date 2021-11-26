@@ -23,7 +23,7 @@ namespace backend.Repositories
         {
             return _context.Animals.Find(a => true).ToList();
         }
-        public Animal GetAnimal(string id)
+        public virtual Animal GetAnimal(string id)
         {
             return _context.Animals.Find(a => a.Id == id).FirstOrDefault();
         }
