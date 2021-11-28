@@ -48,10 +48,14 @@ class Animals(Resource):
             atype = data.get("type")
             aweight = data.get("weight")
             adate = data.get("date")
-
             newAnimal = {"name": aname, "type": atype, "weight": aweight, "date": adate}
-            dbResponse = db.animals.insert_one(newAnimal)
 
+            if aname == None or atype == None or aweight == None or adate == None:
+                return {
+                "message": "Invalid animal data"
+                }, 403
+
+            dbResponse = db.animals.insert_one(newAnimal)
             return {
                 "message": "Animal created",
                 "id": str(dbResponse.inserted_id)
@@ -68,7 +72,7 @@ class Animal(Resource):
         try:
             data = db.animals.find_one({"_id": ObjectId(animal_id)})
             data["_id"] = str(data["_id"])
-            
+
             return data, 200
         except Exception as ex:
             print(ex)
@@ -100,6 +104,9 @@ class Animal(Resource):
         try:
             dbResponse = db.animals.delete_one({"_id": ObjectId(animal_id)})
             
+            if dbResponse.deleted_count == 0:
+                return {"message": "Animal not found"}, 404
+
             return {"message": "Animal deleted","id": str(animal_id)}, 200
         except Exception as ex:
             print(ex)
