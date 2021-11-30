@@ -1,9 +1,8 @@
 # --- Imports and initial configs --- #
-from flask import Flask, jsonify, Response, request
+from flask import Flask, request
 from flask_restx import Resource, Api
 from bson.objectid import ObjectId
 import pymongo
-import json
 
 app = Flask(__name__)
 api = Api(app)
