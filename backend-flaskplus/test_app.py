@@ -39,7 +39,7 @@ class ApiTest(unittest.TestCase):
         self.db.animals.find = Mock(side_effect=find_side_effect)
         self.db.animals.update_one = Mock(side_effect=update_side_effect)
 
-    # Http GET
+    # Http methods
     def test_get_all_animals_not_found(self):
         with self.api.test_client() as c:
             
@@ -48,26 +48,21 @@ class ApiTest(unittest.TestCase):
 
     # --- Database Mocks --- #
     def test_get_one_database(self):
-        with self.api.test_client() as c:
-            animalExpected = {'date': "10-11-2019", 'name': "anabelle", 'weight': 12, 'type': 'Cachorro'}
-            animalQuery = self.db.animals.find_one()
-            self.assertEqual(animalQuery, animalExpected)
+        animalExpected = {'date': "10-11-2019", 'name': "anabelle", 'weight': 12, 'type': 'Cachorro'}
+        animalQuery = self.db.animals.find_one()
+        self.assertEqual(animalQuery, animalExpected)
         
     def test_get_all_database(self):
-        with self.api.test_client() as c:
-            animalExpected = [
+        animalExpected = [
                 {'date': "10-11-2019", 'name': "anabelle", 'weight': 12, 'type': 'Cachorro'},
                 {'date': "10-11-2019", 'name': "Mel", 'weight': 12, 'type': 'Cachorro'}
-            ]
-            animalQuery = list(self.db.animals.find())
-            self.assertEqual(animalQuery, animalExpected)
+        ]
+        animalQuery = list(self.db.animals.find())
+        self.assertEqual(animalQuery, animalExpected)   
 
     def test_insert_one_database(self):
-        with self.api.test_client() as c:
-            animalExpected = {'date': "10-11-2019", 'name': "anabelle", 'weight': 12, 'type': 'Cachorro'}
-            animalQuery = self.db.animals.delete_one()
-            print(animalQuery)
-            self.assertTrue(animalQuery)
+        animalQuery = self.db.animals.insert_one()
+        self.assertEqual(str(animalQuery.inserted_id), '0123456789ab0123456789ab')
     
         
 
