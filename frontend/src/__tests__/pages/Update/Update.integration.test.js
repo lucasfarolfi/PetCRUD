@@ -2,8 +2,8 @@ import React from 'react';
 import { screen, render, fireEvent } from '@testing-library/react';
 import {Router, MemoryRouter, Route} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
-import { selectAnimalsById, updateAnimal } from '../redux-toolkit/animals/animalsSlice'
-import Update from '../pages/Update/index'
+import { selectAnimalsById, updateAnimal } from '../../../redux-toolkit/animals/animalsSlice'
+import Update from '../../../pages/Update/index'
 import {useDispatch, useSelector} from 'react-redux'
 
 jest.mock("react-redux", () => ({
@@ -33,13 +33,13 @@ const mockState = {
     }
 }
 
-jest.mock("../redux-toolkit/animals/animalsSlice", () => ({
+jest.mock("../../../redux-toolkit/animals/animalsSlice", () => ({
     getAnimal: jest.fn(),
     updateAnimal: jest.fn(),
     selectAnimalsById: jest.fn()
 }))
 
-describe('Formulário de Atualizar animal', () =>{
+describe('Update Form component integration tests', () =>{
     beforeEach(() => {
         useSelector.mockImplementation(cb => cb(mockState))
         useDispatch.mockImplementation(() => jest.fn(param => param))//Erro ao carregar o animal na base de dados
@@ -48,7 +48,7 @@ describe('Formulário de Atualizar animal', () =>{
         })
     })
 
-    it('O formulário é renderizado com as informações preenchidas ao entrar na página', ()=>{
+    it('Must render the form correctly', ()=>{
         const idParam = "2";
         const findId = mockState.animals.entities.find(a => a.id === idParam)
         expect(findId).not.toBeNull()
@@ -90,7 +90,7 @@ describe('Formulário de Atualizar animal', () =>{
         expect(screen.getByText("Cancelar")).not.toBeNull()
     })
 
-    it('O botão de Cancelar funciona corretamente', ()=>{
+    it('Must cancel the form, when the Cancel button is clicked', ()=>{
         const idParam = "2";
         const history = createMemoryHistory()
         const findId = mockState.animals.entities.find(a => a.id === idParam)
@@ -110,7 +110,7 @@ describe('Formulário de Atualizar animal', () =>{
         expect(history.location.pathname).toBe("/")
     })
 
-    it('Quando o formulário é preenchido e enviado corretamente', ()=>{
+    it('Must send the form correctly', ()=>{
         const animal = {
             id: "2",
             name: "Nina",
@@ -147,7 +147,7 @@ describe('Formulário de Atualizar animal', () =>{
         expect(updateAnimal).toHaveBeenCalledTimes(1)
     })
 
-    it('O formulário é preenchido sem um animal existente', ()=>{
+    it('Must generate an error, when the animal does not exists', ()=>{
         selectAnimalsById.mockImplementation(() =>{
             mockState.animals.status = 'failed'
         })
@@ -195,7 +195,7 @@ describe('Formulário de Atualizar animal', () =>{
         expect(screen.getByText("Erro ao carregar o animal na base de dados")).not.toBeNull()
     })
 
-    it('Quando o botão de Salvar é clicado sem preencher nenhum input', ()=>{
+    it('Must generate error message, when all inputs is empty', ()=>{
         const idParam = "2";
         const history = createMemoryHistory()
         const findId = mockState.animals.entities.find(a => a.id === idParam)
@@ -218,7 +218,7 @@ describe('Formulário de Atualizar animal', () =>{
         expect(errMsg).not.toBeNull()
     })
 
-    it('Quando o botão de Salvar é clicado sem preencher o nome', ()=>{
+    it('Must generate error message, when Name field is empty', ()=>{
         const idParam = "2";
         const history = createMemoryHistory()
         const findId = mockState.animals.entities.find(a => a.id === idParam)
@@ -257,7 +257,7 @@ describe('Formulário de Atualizar animal', () =>{
         expect(errMsg).not.toBeNull()
     })
 
-    it('Quando o botão de Salvar é clicado sem preencher o tipo', ()=>{
+    it('Must generate error message, when Type field is empty', ()=>{
         const idParam = "2";
         const history = createMemoryHistory()
         const findId = mockState.animals.entities.find(a => a.id === idParam)
@@ -296,7 +296,7 @@ describe('Formulário de Atualizar animal', () =>{
         expect(errMsg).not.toBeNull()
     })
 
-    it('Quando o botão de Salvar é clicado sem preencher o peso', ()=>{
+    it('Must generate error message, when Weight field is empty', ()=>{
         const idParam = "2";
         const history = createMemoryHistory()
         const findId = mockState.animals.entities.find(a => a.id === idParam)
@@ -335,7 +335,7 @@ describe('Formulário de Atualizar animal', () =>{
         expect(errMsg).not.toBeNull()
     })
 
-    it('Quando o botão de Salvar é clicado sem preencher a data de nascimento', ()=>{
+    it('Must generate error message, when Date field is empty', ()=>{
         const idParam = "2";
         const history = createMemoryHistory()
         const findId = mockState.animals.entities.find(a => a.id === idParam)

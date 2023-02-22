@@ -1,13 +1,13 @@
 import React from 'react';
 import { render } from '@testing-library/react'
-import App from '../pages/Home'
+import App from '../../pages/Home'
 import { MemoryRouter } from 'react-router-dom'
-import animalsReducer, { fetchAnimals } from '../redux-toolkit/animals/animalsSlice'
+import animalsReducer, { fetchAnimals } from '../../redux-toolkit/animals/animalsSlice'
 import {Provider} from 'react-redux'
 import { configureStore } from '@reduxjs/toolkit'
-import {httpDelete, httpGet, httpPut, httpPost, httpGetOne} from '../utils/animals'
+import {httpDelete, httpGet, httpPut, httpPost, httpGetOne} from '../../api/AnimalsHttpRequest'
 
-jest.mock('../utils/animals', () =>({
+jest.mock('../../api/AnimalsHttpRequest', () =>({
     httpGet: jest.fn(),
     httpGetOne: jest.fn(),
     httpPost: jest.fn(),
@@ -17,7 +17,7 @@ jest.mock('../utils/animals', () =>({
 
 let store;
 
-describe("Testes de integração - Redux Slice + AnimalsList", () =>{
+describe("Slice Table List integration tests", () =>{
     beforeEach(() => {
         store = configureStore({reducer: { animals: animalsReducer }});
     });
@@ -30,7 +30,7 @@ describe("Testes de integração - Redux Slice + AnimalsList", () =>{
         httpDelete.mockClear();
     });
 
-    it("Quando o dispatch carrega a função FetchAnimals corretamente", async () =>{
+    it("Must load the animals list correctly", async () =>{
         httpGet.mockImplementation(() => Promise.resolve(
             [{
                 id: "1",
@@ -55,7 +55,7 @@ describe("Testes de integração - Redux Slice + AnimalsList", () =>{
         expect(page.getByText("Nina")).not.toBeNull()
     })
 
-    it("Quando o dispatch carrega a função FetchAnimals e retorna loading", async () =>{
+    it("Must generate loading message, when the dispatch status is 'loading'", async () =>{
         const wait = ms => new Promise(resolve => setTimeout(resolve, ms))
         httpGet.mockImplementation(() => wait(1000))
         
@@ -66,7 +66,7 @@ describe("Testes de integração - Redux Slice + AnimalsList", () =>{
         expect(page.getByText("Carregando animais...")).not.toBeNull()
     })
 
-    it("Quando o dispatch carrega a função FetchAnimals e retorna loading", async () =>{
+    it("Must generate error message, when the dispatch status is 'failed'", async () =>{
         httpGet.mockImplementation(() => Promise.reject())
         
         const page = render(<Provider store={store}><App /></Provider>, {wrapper: MemoryRouter})

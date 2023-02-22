@@ -1,24 +1,25 @@
 import React from 'react';
 import { screen, render, fireEvent } from '@testing-library/react';
-import TableLine, { convertDate } from '../components/AnimalsTable/tableLine'
+import TableLine from '../../../components/AnimalsTable/tableLine'
 import {Router, MemoryRouter} from 'react-router-dom';
-import store from '../redux/store'
+import convertDate from '../../../utils/convertDate';
+import store from '../../../redux/store'
 import {Provider} from 'react-redux'
 import {createMemoryHistory} from 'history';
 
-describe('Componente da linha da tabela', () =>{
+describe('TableLine component unit tests', () =>{
     
-    it('deve exibir a data da linha corretamente', () =>{
+    it('Must show date correctly', () =>{
         const convertedDate = convertDate('2020-05-20');
         expect(convertedDate).toBe('20/05/2020');
     })
 
-    it('Animal sem alguma prop', () =>{
+    it('Must generate error, when undefined animal object is passed', () =>{
         const {container} = render(<Provider store={store}><table><tbody><TableLine /></tbody></table></Provider>)
         expect(container.textContent).toBe("Não foi possível exibir o projeto")
     })
 
-    it('deve exibir o animal corretamente', () => {
+    it('Must show the animal data correctly', () => {
         const animal = {
             id: "1",
             name: "Bob",
@@ -44,7 +45,7 @@ describe('Componente da linha da tabela', () =>{
         expect(deleteBtn.textContent).toBe("Excluir")
     })
 
-    it('o botão de editar deve funcionar corretamente', () => {
+    it('Must go to the edit screen, when the Edit button is clicked', () => {
         const history = createMemoryHistory()
         const animal = {
             id: "1",
@@ -65,7 +66,7 @@ describe('Componente da linha da tabela', () =>{
         expect(history.location.pathname).toBe("/animal/"+animal.id+"/editar")
     })
 
-    it('o botão de excluir deve funcionar corretamente', () => {
+    it('Must delete an animal, when the Edit button is clicked', () => {
         const deleteFn = jest.fn()
         const animal = {
             id: "1",

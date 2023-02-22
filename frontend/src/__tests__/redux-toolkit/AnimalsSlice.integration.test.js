@@ -1,8 +1,8 @@
-import {httpDelete, httpGet, httpPut, httpPost, httpGetOne} from '../utils/animals'
+import {httpDelete, httpGet, httpPut, httpPost, httpGetOne} from '../../api/AnimalsHttpRequest'
 import { configureStore } from '@reduxjs/toolkit'
-import animalsReducer, { deleteAnimal, fetchAnimals, getAnimal, saveAnimal, updateAnimal } from '../redux-toolkit/animals/animalsSlice'
+import animalsReducer, { deleteAnimal, fetchAnimals, getAnimal, saveAnimal, updateAnimal } from '../../redux-toolkit/animals/animalsSlice'
 
-jest.mock("../utils/animals", () => ({
+jest.mock("../../api/AnimalsHttpRequest", () => ({
     httpGet: jest.fn(),
     httpGetOne: jest.fn(),
     httpPost: jest.fn(),
@@ -10,9 +10,9 @@ jest.mock("../utils/animals", () => ({
     httpDelete: jest.fn()
 }))
 
-let store;
+describe("Animals Slice redux integration tests", () =>{
+    let store;
 
-describe("Redux Slice", () =>{
     beforeEach(() => {
         store = configureStore({reducer: { animals: animalsReducer }});
     });
@@ -26,7 +26,7 @@ describe("Redux Slice", () =>{
     });
 
     //HttpGet
-    it('Quando retorna sucesso na operação httpGet', async () => {
+    it('Must return a list of animals, when calls HttpGet', async () => {
         //Mocka a função Get e simula o retorno de um array de objetos
         httpGet.mockImplementation(() => Promise.resolve([
             {
@@ -56,7 +56,7 @@ describe("Redux Slice", () =>{
         )
     })
 
-    it('Quando retorna erro na operação httpGet', async () => {
+    it('Must return error status, when calls HttpGet and an error occurs', async () => {
         //Mocka a função Get e simula o retorno de uma mensagem de erro
         httpGet.mockImplementation(() => Promise.reject({}));
         
@@ -67,7 +67,7 @@ describe("Redux Slice", () =>{
         expect(store.getState().animals.status).toBe('failed');
     })
 
-    it('Quando retorna carregando na operação httpGet', async () => {
+    it('Must return loading status, when calls HttpGet', async () => {
         const wait = ms => new Promise(resolve => setTimeout(resolve, ms))
         
         httpGet.mockImplementation(() => wait(1000))
@@ -80,7 +80,7 @@ describe("Redux Slice", () =>{
     })
 
     //HttpGetOne
-    it('Quando retorna sucesso na operação httpGetOne', async () =>{
+    it('Must return an animal, when calls HttpGetOne', async () =>{
         const animalGet = {
             id: "1",
             name: "totó",
@@ -96,7 +96,7 @@ describe("Redux Slice", () =>{
         expect(store.getState().animals.entities["1"]).toBe(animalGet)
     })
 
-    it('Quando retorna erro na operação httpGetOne', async () => {
+    it('Must return error status, when calls HttpGetOne and an error occurs', async () => {
         //Mocka a função Get e simula o retorno de uma mensagem de erro
         httpGetOne.mockImplementation(() => Promise.reject({}));
         
@@ -107,7 +107,7 @@ describe("Redux Slice", () =>{
         expect(store.getState().animals.status).toBe('failed');
     })
 
-    it('Quando retorna carregando na operação httpGet', async () => {
+    it('Must return loading status, when calls HttpGetOne', async () => {
         const wait = ms => new Promise(resolve => setTimeout(resolve, ms))
         
         httpGetOne.mockImplementation(() => wait(1000))
@@ -120,7 +120,7 @@ describe("Redux Slice", () =>{
     })
 
     //HttpPost
-    it('Quando retorna sucesso na operação httpPost', async () =>{
+    it('Must return a created animal, when calls HttpPost', async () =>{
         const animal = {
             name: "totó",
             type: "cachorro",
@@ -137,7 +137,7 @@ describe("Redux Slice", () =>{
         expect(store.getState().animals.entities["1"]).toEqual({...animal, id: "1"})
     })
 
-    it('Quando retorna erro na operação httpPost', async () => {
+    it('Must return error status, when calls HttpPost and an error occurs', async () => {
         //Mocka a função Get e simula o retorno de uma mensagem de erro
         httpPost.mockImplementation(() => Promise.reject({}));
         
@@ -148,7 +148,7 @@ describe("Redux Slice", () =>{
         expect(store.getState().animals.status).toBe('failed');
     })
 
-    it('Quando retorna carregando na operação httpPost', async () => {
+    it('Must return loading status, when calls HttpPost', async () => {
         const wait = ms => new Promise(resolve => setTimeout(resolve, ms))
         
         httpPost.mockImplementation(() => wait(1000))
@@ -161,7 +161,7 @@ describe("Redux Slice", () =>{
     })
 
     //HttpPut
-    it('Quando retorna sucesso na operação HttpPut', async () =>{
+    it('Must return an updated animal, when calls HttpPut', async () =>{
         //Objeto do animal
         const updatedAnimal = {
             id: "1",
@@ -178,7 +178,7 @@ describe("Redux Slice", () =>{
         expect(store.getState().animals.entities["1"]).toEqual({...updatedAnimal})
     })
 
-    it('Quando retorna erro na operação httpPut', async () => {
+    it('Must return error status, when calls HttpPut and an error occurs', async () => {
         //Mocka a função Put e simula um retorno de erro de promise
         httpPut.mockImplementation(() => Promise.reject({}));
         
@@ -189,7 +189,7 @@ describe("Redux Slice", () =>{
         expect(store.getState().animals.status).toBe('failed');
     })
 
-    it('Quando retorna carregando na operação httpPut', async () => {
+    it('Must return loading status, when calls HttpPut', async () => {
         const wait = ms => new Promise(resolve => setTimeout(resolve, ms))
         
         httpPut.mockImplementation(() => wait(1000))
@@ -202,7 +202,7 @@ describe("Redux Slice", () =>{
     })
 
     //HttpDelete
-    it("Quando retorna sucesso na operação HttpDelete", async () =>{
+    it("Must delete an animal, when calls HttpDelete", async () =>{
         const deletedAnimal = {
             id: "1",
             name: "Totó",
@@ -217,7 +217,7 @@ describe("Redux Slice", () =>{
         expect(store.getState().animals.ids.length).toBe(0)
     })
 
-    it('Quando retorna erro na operação httpDelete', async () => {
+    it('Must return error status, when calls HttpDelete and an error occurs', async () => {
         //Mocka a função Delete e simula o retorno de um erro
         httpDelete.mockImplementation(() => Promise.reject({}));
         
@@ -228,7 +228,7 @@ describe("Redux Slice", () =>{
         expect(store.getState().animals.status).toBe('failed');
     })
 
-    it('Quando retorna carregando na operação httpDelete', async () => {
+    it('Must return loading status, when calls HttpDelete', async () => {
         const wait = ms => new Promise(resolve => setTimeout(resolve, ms))
         
         httpDelete.mockImplementation(() => wait(1000))

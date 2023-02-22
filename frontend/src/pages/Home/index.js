@@ -6,11 +6,6 @@ import {useHistory} from 'react-router-dom'
 import AnimalsTable from '../../components/AnimalsTable'
 import { fetchAnimals, selectAllAnimals } from '../../redux-toolkit/animals/animalsSlice'
 
-export const convertDate = (date) =>{
-  const newDate = date.split("-")
-  return `${newDate[2]}/${newDate[1]}/${newDate[0]}`
-}
-
 export default function App() {
   //Redux Toolkit
   const dispatch = useDispatch()

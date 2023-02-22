@@ -4,7 +4,7 @@ export const httpGet = () =>{
     return api()
         .get("/animais")
         .then(res =>{
-            return res.data || []
+            return res.data
         }).catch(e => {
             throw e
         })
@@ -23,7 +23,7 @@ export const httpDelete = (id) =>{
 export const httpPost = (a) =>{
     return api()
         .post("/animais", a).then(res =>{
-            return res.data || {}
+            return res.data
         }).catch(e => {
             throw e
         })
@@ -32,7 +32,7 @@ export const httpPost = (a) =>{
 export const httpGetOne = (id) =>{
     return api()
         .get("/animais/"+id).then(res =>{
-            return res.data || {}
+            return res.data
         }).catch(e => {
             throw e
         })

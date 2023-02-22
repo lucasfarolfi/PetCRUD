@@ -1,5 +1,5 @@
 import {createEntityAdapter,createSlice,createAsyncThunk} from "@reduxjs/toolkit";
-import { httpDelete, httpGet, httpPost, httpPut, httpGetOne } from "../../utils/animals";
+import { httpDelete, httpGet, httpPost, httpPut, httpGetOne } from "../../api/AnimalsHttpRequest";
 
 //Entity adapter
 const animalAdapter = createEntityAdapter();

@@ -3,8 +3,8 @@ import { screen, render, fireEvent } from '@testing-library/react';
 import {Router} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux'
 import {createMemoryHistory} from 'history';
-import { saveAnimal } from '../redux-toolkit/animals/animalsSlice'
-import Create from '../pages/Create/index'
+import { saveAnimal } from '../../../redux-toolkit/animals/animalsSlice'
+import Create from '../../../pages/Create/index'
 
 jest.mock("react-redux", () => ({
     ...jest.requireActual("react-redux"),
@@ -33,11 +33,11 @@ const mockState = {
     }
 }
 
-jest.mock("../redux-toolkit/animals/animalsSlice", () => ({
+jest.mock("../../../redux-toolkit/animals/animalsSlice", () => ({
     saveAnimal: jest.fn()
 }))
 
-describe('Formulário de criar animal', () =>{
+describe('Create Form component unit tests', () =>{
     beforeEach(() => {
         useSelector.mockImplementation(cb => cb(mockState))
         useDispatch.mockImplementation(() => jest.fn(param => param))
@@ -53,7 +53,7 @@ describe('Formulário de criar animal', () =>{
         })
     })
 
-    it('O formulário é renderizado ao entrar na página', ()=>{
+    it('Must render input fields in page correctly', ()=>{
         render(<Create />)
         expect(screen.getByText("Novo Animal").textContent).toBe("Novo Animal")
 
@@ -73,7 +73,7 @@ describe('Formulário de criar animal', () =>{
         expect(screen.getByText("Cancelar")).not.toBeNull()
     })
 
-    it('O botão de Cancelar funciona corretamente', ()=>{
+    it('Must cancel the form, when the Cancel button is clicked', ()=>{
         const history = createMemoryHistory()
         render(<Router history={history}><Create /></Router>)
         const cancelBtn = screen.getByText("Cancelar")
@@ -81,7 +81,7 @@ describe('Formulário de criar animal', () =>{
         expect(history.location.pathname).toBe("/")
     })
 
-    it('Quando o formulário é preenchido e enviado corretamente', ()=>{
+    it('Must send the form correctly', ()=>{
         const history = createMemoryHistory()
         render(<Router history={history}><Create /></Router>)
 
@@ -117,7 +117,7 @@ describe('Formulário de criar animal', () =>{
         expect(mockState.animals.entities.filter(a => a.id === "3")[0]).toEqual(animal)
     })
 
-    it('Quando o botão de Salvar é clicado sem preencher nenhum input', ()=>{
+    it('Must generate error message, when some input is empty', ()=>{
         const history = createMemoryHistory()
         render(<Router history={history}><Create /></Router>)
 
@@ -128,7 +128,7 @@ describe('Formulário de criar animal', () =>{
         expect(errMsg).not.toBeNull()
     })
 
-    it('Quando o botão de Salvar é clicado sem preencher o nome', ()=>{
+    it('Must generate error message, when Name field is empty', ()=>{
         const history = createMemoryHistory()
         render(<Router history={history}><Create /></Router>)
 
@@ -155,7 +155,7 @@ describe('Formulário de criar animal', () =>{
         expect(errMsg).not.toBeNull()
     })
 
-    it('Quando o botão de Salvar é clicado sem preencher o tipo', ()=>{
+    it('Must generate error message, when Type field is empty', ()=>{
         const history = createMemoryHistory()
         render(<Router history={history}><Create /></Router>)
 
@@ -182,7 +182,7 @@ describe('Formulário de criar animal', () =>{
         expect(errMsg).not.toBeNull()
     })
 
-    it('Quando o botão de Salvar é clicado sem preencher o peso', ()=>{
+    it('Must generate error message, when Weight field is empty', ()=>{
         const history = createMemoryHistory()
         render(<Router history={history}><Create /></Router>)
 
@@ -209,7 +209,7 @@ describe('Formulário de criar animal', () =>{
         expect(errMsg).not.toBeNull()
     })
 
-    it('Quando o botão de Salvar é clicado sem preencher o peso', ()=>{
+    it('Must generate error message, when Date field is empty', ()=>{
         const history = createMemoryHistory()
         render(<Router history={history}><Create /></Router>)
 

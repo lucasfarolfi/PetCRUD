@@ -1,9 +1,5 @@
 import {useHistory} from 'react-router-dom'
-
-export const convertDate = (date) =>{
-    const newDate = date.split("-")
-    return `${newDate[2]}/${newDate[1]}/${newDate[0]}`
-}
+import convertDate from '../../utils/convertDate'
 
 export default function TableLine({animal, handleDelete}){
   let history = useHistory()
@@ -15,7 +11,7 @@ export default function TableLine({animal, handleDelete}){
         <td>{animal.type}</td>
         <td>{animal.weight} Kg</td>
         <td><button onClick={() =>{history.push(`/animal/${animal.id}/editar`)}}>Alterar</button></td>
-        <td><button onClick={() =>{handleDelete(animal.id)}}>Excluir</button></td>
+        <td><button data-testid={`delete-button-${animal.id}`} onClick={() =>{handleDelete(animal.id)}}>Excluir</button></td>
       </tr>)
     }
     else{

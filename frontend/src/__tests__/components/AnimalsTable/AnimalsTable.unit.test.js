@@ -1,19 +1,19 @@
 import React from 'react';
 import { screen, render, fireEvent } from '@testing-library/react';
-import {TableLine} from '../components/AnimalsTable/tableLine'
+import {TableLine} from '../../../components/AnimalsTable/tableLine'
 import {Router, MemoryRouter} from 'react-router-dom';
-import store from '../redux/store'
+import store from '../../../redux/store'
 import {Provider} from 'react-redux'
 import {createMemoryHistory} from 'history';
-import AnimalsTable from '../components/AnimalsTable/index';
-import { selectAllAnimals } from '../redux-toolkit/animals/animalsSlice';
+import AnimalsTable from '../../../components/AnimalsTable/index';
+import { selectAllAnimals } from '../../../redux-toolkit/animals/animalsSlice';
 
 /*jest.mock('../components/AnimalsTable/tableLine', () => ({
     ...jest.requireActual('../components/AnimalsTable/tableLine'),
     TableLine: jest.fn(() => <tr><td>MockedLine</td></tr>)
 }))*/
 
-describe('Componente da tabela de animais', () =>{
+describe('AnimalsTable component unit tests', () =>{
    /* beforeEach(() => {
         TableLine.mockImplementation(() =>{
             return (<tr><td>MockedLine</td></tr>)
