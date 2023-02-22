@@ -12,10 +12,10 @@ Este projeto foi desenvolvido com base em um teste de processo seletivo de um Es
 Nessa aplicação foram utilizados como tecnologias: 
 
 - React
-- Redux Thunk
+- Redux Toolkit
 - Axios
 - SASS
-- Asp.Net MVC
+- .Net Core 5
 - MongoDB
 
 ---
@@ -35,5 +35,11 @@ Para configurar o Frontend:
 * Abra o terminal na pasta *"Frontend"*;
 * Execute o comando: yarn install;
 * Execute o comando: yarn start.
+
+Para executar os testes do FrontEnd:
+* Execute o comando: yarn test
+
+Para ver a coverage dos testes do FrontEnd:
+* Execute o comando: yarn coverage
 
 Pronto !!! O projeto está configurado, basta utilizar o link gerado pelo frontend e agora está pronto para ser utilizado.
